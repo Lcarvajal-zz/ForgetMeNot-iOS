@@ -9,6 +9,7 @@
 #import "PageContentViewController.h"
 
 @interface PageContentViewController ()
+@property (strong, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 
 @end
@@ -18,6 +19,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Set image and text.
+    UIImage *iconImage = [UIImage imageNamed:self.iconName];
+    self.iconImageView.image = iconImage;
     self.titleLabel.text = self.titleText;
 }
 

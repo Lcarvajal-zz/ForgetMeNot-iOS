@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSArray *pageTitles;
+@property (strong, nonatomic) NSArray *pageIcons;
 
 @end
 
@@ -22,6 +23,8 @@
     [super viewDidLoad];
     
     _pageTitles = @[@"Location-based reminders.", @"Reminders for when you leave.", @"Reminders for when you need to leave.", @"Reminders for when you arrive.", @"Sign up now!"];
+    
+    _pageIcons = @[@"AppIconTransparentOutline", @"LeavingIconWhite", @"StayingIconWhite", @"ArrivingIconWhite", @"pencil-icon"];
     
     // Create page view controller.
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
@@ -82,6 +85,7 @@
     // Create a new view controller and pass suitable data.
     PageContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageContentViewController"];
     pageContentViewController.titleText = self.pageTitles[index];
+    pageContentViewController.iconName = self.pageIcons[index];
     pageContentViewController.pageIndex = index;
     
     return pageContentViewController;

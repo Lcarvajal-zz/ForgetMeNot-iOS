@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FDAD004B-3D06-430B-A3A2-F931F2AA830D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ForgetMeNot-Location-Based-Reminders</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>ECDB576D096A8D40E8352E8D286D5E91D384B77A</key>
+		<string>https://github.com/Lcarvajal/ForgetMeNot-iOS.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ForgetMeNot-Location-Based-Reminders.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>ECDB576D096A8D40E8352E8D286D5E91D384B77A</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Lcarvajal/ForgetMeNot-iOS.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>ECDB576D096A8D40E8352E8D286D5E91D384B77A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>ECDB576D096A8D40E8352E8D286D5E91D384B77A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ForgetMeNot-Location-Based-Reminders</string>
+		</dict>
+	</array>
+</dict>
+</plist>

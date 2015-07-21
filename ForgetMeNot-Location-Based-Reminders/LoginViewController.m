@@ -26,6 +26,9 @@
     // Set text field delegates.
     self.emailTF.delegate = self;
     self.passwordTF.delegate = self;
+    
+    // Assign first responder.
+    [self.emailTF becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {

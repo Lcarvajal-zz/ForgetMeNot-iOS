@@ -12,5 +12,6 @@
 
 @property NSUInteger pageIndex;
 @property NSString *titleText;
+@property NSString *iconName;
 
 @end

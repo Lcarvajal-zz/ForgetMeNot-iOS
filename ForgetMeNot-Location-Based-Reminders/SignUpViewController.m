@@ -28,6 +28,9 @@
     self.nameTF.delegate = self;
     self.emailTF.delegate = self;
     self.passwordTF.delegate = self;
+    
+    // Assign first responder.
+    [self.nameTF becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
