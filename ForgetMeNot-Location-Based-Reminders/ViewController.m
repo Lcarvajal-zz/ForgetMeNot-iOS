@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import <Parse/Parse.h>
 
 @interface ViewController ()
 
@@ -18,6 +18,18 @@
 @end
 
 @implementation ViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    if ([PFUser currentUser]) {
+        
+        if ([[[PFUser currentUser] objectForKey:@"emailVerified"] boolValue])
+            [self performSegueWithIdentifier:@"mapViewSegue" sender:self];
+        else
+            [self performSegueWithIdentifier:@"verifyEmailSegue" sender:self];
+    }
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

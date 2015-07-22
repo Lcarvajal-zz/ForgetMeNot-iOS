@@ -7,6 +7,7 @@
 //
 
 #import "SignUpViewController.h"
+#import <Parse/Parse.h>
 
 @interface SignUpViewController ()
 
@@ -38,15 +39,92 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - User Sign Up.
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (BOOL)isValidSignUpInfo {
+    
+    // Format text fields.
+    self.nameTF.text = [[self.nameTF.text lowercaseString] capitalizedString];
+    self.emailTF.text = [self.emailTF.text lowercaseString];
+    
+    // Get text field values.
+    NSString *name = self.nameTF.text;
+    NSString *email = self.emailTF.text;
+    NSString *password = self.passwordTF.text;
+    
+    // Make sure no fields are empty.
+    if ([name length] == 0) {
+        
+        // Alert user that name is not valid.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Name"
+                                                        message:@"Name cannot be blank."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    else if ([email length] == 0) {
+        
+        // Alert user that email is not valid.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Email"
+                                                        message:@"Email cannot be blank."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    else if ([password length] < 8) {
+        
+        // Alert user that password is not valid.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Password"
+                                                        message:@"Password must be eight characters or longer."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    
+    // Check for valid email.
+    NSArray *checkEmail = [email componentsSeparatedByString:@"@"];
+    if ([checkEmail count] <= 1) {
+        
+        // Alert user that password is not valid.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Email"
+                                                        message:@"ForgetMeNot requires a valid email address."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return NO;
+    }
+    
+    // Trim any outside white space user may have typed.
+    name = [name stringByTrimmingCharactersInSet:
+            [NSCharacterSet whitespaceCharacterSet]];
+    email = [email stringByTrimmingCharactersInSet:
+             [NSCharacterSet whitespaceCharacterSet]];
+    
+    // Check for any white space in username and email. (There should not be any)
+    NSRange whiteSpaceRangeEmail = [email rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (whiteSpaceRangeEmail.location != NSNotFound){
+        
+        // Alert user that password is not valid.
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Username or Email"
+                                                        message:@"Your Email and Username cannot contain any spaces!"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        return NO;
+    }
+    
+    // Valid user info.
+    return true;
 }
-*/
 
 #pragma mark - Button Actions
 
@@ -75,8 +153,36 @@
 
 - (IBAction)signUpAction:(id)sender {
     
-    // Attempt user sign up.
-    NSLog(@"Attempt user sign up!");
+    // Check for valid sign up info.
+    if (![self isValidSignUpInfo])
+        return;
+    
+    // Create PFUser object with formatted fields.
+    PFUser *user = [PFUser user];
+    user.username = self.emailTF.text;
+    user.email = self.emailTF.text;
+    user.password = self.passwordTF.text;
+    user[@"name"] = self.nameTF.text;
+    
+    // Sign user up, Parse checks for existing users.
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            
+            // User is signed up! Show view explaining confirmation process.
+            [self performSegueWithIdentifier:@"verifyEmailSegue" sender:self];
+        } else {
+            
+            NSString *errorString = [error userInfo][@"error"];
+            
+            // Alert user that sign up did not work. Show error message.
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sign Up Error"
+                                                            message:errorString
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
 }
 
 - (IBAction)cancelSignUpAction:(id)sender {

@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import <Parse/Parse.h>
 
 @interface LoginViewController ()
 
@@ -63,8 +64,36 @@
 
 - (IBAction)logInAction:(id)sender {
     
-    // Attempt user log in.
-    NSLog(@"Attempt user log in!");
+    NSString *emailNoWhiteSpace = [self.emailTF.text stringByTrimmingCharactersInSet:
+                                      [NSCharacterSet whitespaceCharacterSet]];
+    
+    [PFUser logInWithUsernameInBackground:emailNoWhiteSpace password:self.passwordTF.text block:^(PFUser *user, NSError *error) {
+        if (user) {
+            
+            NSLog(@"%@", [PFUser currentUser]);
+            
+            // user logs in
+            if ([[user objectForKey:@"emailVerified"] boolValue])
+                [self performSegueWithIdentifier:@"mapViewSegue" sender:self];
+            else
+                [self performSegueWithIdentifier:@"verifyEmailSegue" sender:self];
+            
+        } else {
+            // error in login
+            NSString *errorString = [[error userInfo] objectForKey:@"error"];
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                           message:errorString
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Ok"
+                                                                    style:UIAlertActionStyleDefault
+                                                                  handler:^(UIAlertAction* action) {}];
+            // add action to alert and show to user
+            [alert addAction:defaultAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            
+        }
+    }];
 }
 
 - (IBAction)cancelLoginAction:(id)sender {

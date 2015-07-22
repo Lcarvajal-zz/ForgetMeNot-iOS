@@ -32,6 +32,13 @@
 		8021D68F1B55F9CC002ADF66 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8021D68E1B55F9CC002ADF66 /* PageContentViewController.m */; };
 		8021D6921B55FB00002ADF66 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8021D6911B55FB00002ADF66 /* ViewController.m */; };
 		8021D69D1B561F1D002ADF66 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8021D69C1B561F1D002ADF66 /* SignUpViewController.m */; };
+		808401981B5F30310072B978 /* VerifyEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401971B5F30310072B978 /* VerifyEmailViewController.m */; };
+		8084019B1B5F34170072B978 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808401991B5F34170072B978 /* CoreLocation.framework */; };
+		8084019C1B5F34170072B978 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8084019A1B5F34170072B978 /* MapKit.framework */; };
+		808401A01B5F34C80072B978 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8084019F1B5F34C80072B978 /* MapViewController.m */; };
+		808401A31B5F64BE0072B978 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401A21B5F64BE0072B978 /* ResetPasswordViewController.m */; };
+		808401A71B5F7BD10072B978 /* SetReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401A61B5F7BD10072B978 /* SetReminderViewController.m */; };
+		808401AA1B5F7C110072B978 /* CurrentRemindersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401A91B5F7C110072B978 /* CurrentRemindersTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +86,18 @@
 		8021D6911B55FB00002ADF66 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8021D69B1B561F1D002ADF66 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		8021D69C1B561F1D002ADF66 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		808401961B5F30310072B978 /* VerifyEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyEmailViewController.h; sourceTree = "<group>"; };
+		808401971B5F30310072B978 /* VerifyEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyEmailViewController.m; sourceTree = "<group>"; };
+		808401991B5F34170072B978 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CoreLocation.framework; sourceTree = "<group>"; };
+		8084019A1B5F34170072B978 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MapKit.framework; sourceTree = "<group>"; };
+		8084019E1B5F34C80072B978 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		8084019F1B5F34C80072B978 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		808401A11B5F64BE0072B978 /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
+		808401A21B5F64BE0072B978 /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordViewController.m; sourceTree = "<group>"; };
+		808401A51B5F7BD10072B978 /* SetReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetReminderViewController.h; sourceTree = "<group>"; };
+		808401A61B5F7BD10072B978 /* SetReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetReminderViewController.m; sourceTree = "<group>"; };
+		808401A81B5F7C110072B978 /* CurrentRemindersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentRemindersTableViewController.h; sourceTree = "<group>"; };
+		808401A91B5F7C110072B978 /* CurrentRemindersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentRemindersTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,10 +109,12 @@
 				8021D67A1B54C1E4002ADF66 /* libz.dylib in Frameworks */,
 				8021D6781B54C1D4002ADF66 /* SystemConfiguration.framework in Frameworks */,
 				8021D6761B54C1CC002ADF66 /* StoreKit.framework in Frameworks */,
+				8084019B1B5F34170072B978 /* CoreLocation.framework in Frameworks */,
 				8021D6741B54C1C5002ADF66 /* Social.framework in Frameworks */,
 				8021D6721B54C1BA002ADF66 /* Security.framework in Frameworks */,
 				8021D6701B54C1B0002ADF66 /* QuartzCore.framework in Frameworks */,
 				8021D66E1B54C1A4002ADF66 /* MobileCoreServices.framework in Frameworks */,
+				8084019C1B5F34170072B978 /* MapKit.framework in Frameworks */,
 				8021D66C1B54C19A002ADF66 /* CoreLocation.framework in Frameworks */,
 				8021D66A1B54C190002ADF66 /* CoreGraphics.framework in Frameworks */,
 				8021D6681B54C185002ADF66 /* CFNetwork.framework in Frameworks */,
@@ -177,6 +198,8 @@
 		8021D65E1B54C133002ADF66 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				808401991B5F34170072B978 /* CoreLocation.framework */,
+				8084019A1B5F34170072B978 /* MapKit.framework */,
 				8021D67B1B54C1F3002ADF66 /* libsqlite3.dylib */,
 				8021D6791B54C1E4002ADF66 /* libz.dylib */,
 				8021D6771B54C1D4002ADF66 /* SystemConfiguration.framework */,
@@ -203,6 +226,10 @@
 				8021D6401B54C049002ADF66 /* LoginViewController.m */,
 				8021D69B1B561F1D002ADF66 /* SignUpViewController.h */,
 				8021D69C1B561F1D002ADF66 /* SignUpViewController.m */,
+				808401961B5F30310072B978 /* VerifyEmailViewController.h */,
+				808401971B5F30310072B978 /* VerifyEmailViewController.m */,
+				808401A11B5F64BE0072B978 /* ResetPasswordViewController.h */,
+				808401A21B5F64BE0072B978 /* ResetPasswordViewController.m */,
 			);
 			name = "User Login";
 			sourceTree = "<group>";
@@ -212,6 +239,7 @@
 			children = (
 				8021D68C1B55F980002ADF66 /* Welcome Pages */,
 				8021D67D1B54C3EB002ADF66 /* User Login */,
+				8084019D1B5F34920072B978 /* Reminders */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -232,6 +260,19 @@
 				8021D68E1B55F9CC002ADF66 /* PageContentViewController.m */,
 			);
 			name = "Welcome Pages";
+			sourceTree = "<group>";
+		};
+		8084019D1B5F34920072B978 /* Reminders */ = {
+			isa = PBXGroup;
+			children = (
+				8084019E1B5F34C80072B978 /* MapViewController.h */,
+				8084019F1B5F34C80072B978 /* MapViewController.m */,
+				808401A51B5F7BD10072B978 /* SetReminderViewController.h */,
+				808401A61B5F7BD10072B978 /* SetReminderViewController.m */,
+				808401A81B5F7C110072B978 /* CurrentRemindersTableViewController.h */,
+				808401A91B5F7C110072B978 /* CurrentRemindersTableViewController.m */,
+			);
+			name = Reminders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,9 +378,14 @@
 				8021D6411B54C049002ADF66 /* LoginViewController.m in Sources */,
 				8021D68F1B55F9CC002ADF66 /* PageContentViewController.m in Sources */,
 				8021D69D1B561F1D002ADF66 /* SignUpViewController.m in Sources */,
+				808401A71B5F7BD10072B978 /* SetReminderViewController.m in Sources */,
+				808401A01B5F34C80072B978 /* MapViewController.m in Sources */,
 				8021D63E1B54C049002ADF66 /* AppDelegate.m in Sources */,
+				808401981B5F30310072B978 /* VerifyEmailViewController.m in Sources */,
 				8021D63B1B54C049002ADF66 /* main.m in Sources */,
 				8021D6921B55FB00002ADF66 /* ViewController.m in Sources */,
+				808401A31B5F64BE0072B978 /* ResetPasswordViewController.m in Sources */,
+				808401AA1B5F7C110072B978 /* CurrentRemindersTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
