@@ -32,13 +32,16 @@
 		8021D68F1B55F9CC002ADF66 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8021D68E1B55F9CC002ADF66 /* PageContentViewController.m */; };
 		8021D6921B55FB00002ADF66 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8021D6911B55FB00002ADF66 /* ViewController.m */; };
 		8021D69D1B561F1D002ADF66 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8021D69C1B561F1D002ADF66 /* SignUpViewController.m */; };
+		804D7D161B6D2A6600438CDF /* fMNCustomPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 804D7D141B6D2A6600438CDF /* fMNCustomPin.m */; };
 		808401981B5F30310072B978 /* VerifyEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401971B5F30310072B978 /* VerifyEmailViewController.m */; };
 		8084019B1B5F34170072B978 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808401991B5F34170072B978 /* CoreLocation.framework */; };
 		8084019C1B5F34170072B978 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8084019A1B5F34170072B978 /* MapKit.framework */; };
 		808401A01B5F34C80072B978 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8084019F1B5F34C80072B978 /* MapViewController.m */; };
 		808401A31B5F64BE0072B978 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401A21B5F64BE0072B978 /* ResetPasswordViewController.m */; };
-		808401A71B5F7BD10072B978 /* SetReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401A61B5F7BD10072B978 /* SetReminderViewController.m */; };
 		808401AA1B5F7C110072B978 /* CurrentRemindersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401A91B5F7C110072B978 /* CurrentRemindersTableViewController.m */; };
+		808401BC1B691BC90072B978 /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401BB1B691BC90072B978 /* Reminder.m */; };
+		808401BF1B691C470072B978 /* SetUserInRadiusReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401BE1B691C470072B978 /* SetUserInRadiusReminderViewController.m */; };
+		808401C21B6925A30072B978 /* SetUserOutsideRadiusReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401C11B6925A30072B978 /* SetUserOutsideRadiusReminderViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +89,8 @@
 		8021D6911B55FB00002ADF66 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8021D69B1B561F1D002ADF66 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		8021D69C1B561F1D002ADF66 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		804D7D141B6D2A6600438CDF /* fMNCustomPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fMNCustomPin.m; sourceTree = "<group>"; };
+		804D7D151B6D2A6600438CDF /* fMNCustomPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fMNCustomPin.h; sourceTree = "<group>"; };
 		808401961B5F30310072B978 /* VerifyEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyEmailViewController.h; sourceTree = "<group>"; };
 		808401971B5F30310072B978 /* VerifyEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyEmailViewController.m; sourceTree = "<group>"; };
 		808401991B5F34170072B978 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CoreLocation.framework; sourceTree = "<group>"; };
@@ -94,10 +99,14 @@
 		8084019F1B5F34C80072B978 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		808401A11B5F64BE0072B978 /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
 		808401A21B5F64BE0072B978 /* ResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordViewController.m; sourceTree = "<group>"; };
-		808401A51B5F7BD10072B978 /* SetReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetReminderViewController.h; sourceTree = "<group>"; };
-		808401A61B5F7BD10072B978 /* SetReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetReminderViewController.m; sourceTree = "<group>"; };
 		808401A81B5F7C110072B978 /* CurrentRemindersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentRemindersTableViewController.h; sourceTree = "<group>"; };
 		808401A91B5F7C110072B978 /* CurrentRemindersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentRemindersTableViewController.m; sourceTree = "<group>"; };
+		808401BA1B691BC90072B978 /* Reminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reminder.h; sourceTree = "<group>"; };
+		808401BB1B691BC90072B978 /* Reminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reminder.m; sourceTree = "<group>"; };
+		808401BD1B691C470072B978 /* SetUserInRadiusReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetUserInRadiusReminderViewController.h; sourceTree = "<group>"; };
+		808401BE1B691C470072B978 /* SetUserInRadiusReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetUserInRadiusReminderViewController.m; sourceTree = "<group>"; };
+		808401C01B6925A30072B978 /* SetUserOutsideRadiusReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetUserOutsideRadiusReminderViewController.h; sourceTree = "<group>"; };
+		808401C11B6925A30072B978 /* SetUserOutsideRadiusReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetUserOutsideRadiusReminderViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +256,10 @@
 		8021D68B1B54D8FB002ADF66 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				808401BA1B691BC90072B978 /* Reminder.h */,
+				808401BB1B691BC90072B978 /* Reminder.m */,
+				804D7D151B6D2A6600438CDF /* fMNCustomPin.h */,
+				804D7D141B6D2A6600438CDF /* fMNCustomPin.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -267,10 +280,12 @@
 			children = (
 				8084019E1B5F34C80072B978 /* MapViewController.h */,
 				8084019F1B5F34C80072B978 /* MapViewController.m */,
-				808401A51B5F7BD10072B978 /* SetReminderViewController.h */,
-				808401A61B5F7BD10072B978 /* SetReminderViewController.m */,
 				808401A81B5F7C110072B978 /* CurrentRemindersTableViewController.h */,
 				808401A91B5F7C110072B978 /* CurrentRemindersTableViewController.m */,
+				808401BD1B691C470072B978 /* SetUserInRadiusReminderViewController.h */,
+				808401BE1B691C470072B978 /* SetUserInRadiusReminderViewController.m */,
+				808401C01B6925A30072B978 /* SetUserOutsideRadiusReminderViewController.h */,
+				808401C11B6925A30072B978 /* SetUserOutsideRadiusReminderViewController.m */,
 			);
 			name = Reminders;
 			sourceTree = "<group>";
@@ -376,12 +391,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				8021D6411B54C049002ADF66 /* LoginViewController.m in Sources */,
+				808401BF1B691C470072B978 /* SetUserInRadiusReminderViewController.m in Sources */,
+				804D7D161B6D2A6600438CDF /* fMNCustomPin.m in Sources */,
 				8021D68F1B55F9CC002ADF66 /* PageContentViewController.m in Sources */,
 				8021D69D1B561F1D002ADF66 /* SignUpViewController.m in Sources */,
-				808401A71B5F7BD10072B978 /* SetReminderViewController.m in Sources */,
 				808401A01B5F34C80072B978 /* MapViewController.m in Sources */,
 				8021D63E1B54C049002ADF66 /* AppDelegate.m in Sources */,
 				808401981B5F30310072B978 /* VerifyEmailViewController.m in Sources */,
+				808401C21B6925A30072B978 /* SetUserOutsideRadiusReminderViewController.m in Sources */,
+				808401BC1B691BC90072B978 /* Reminder.m in Sources */,
 				8021D63B1B54C049002ADF66 /* main.m in Sources */,
 				8021D6921B55FB00002ADF66 /* ViewController.m in Sources */,
 				808401A31B5F64BE0072B978 /* ResetPasswordViewController.m in Sources */,
@@ -511,6 +529,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -526,6 +546,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

@@ -7,6 +7,8 @@
 //
 
 #import "MapViewController.h"
+#import "SetUserInRadiusReminderViewController.h"
+#import "SetUserOutsideRadiusReminderViewController.h"
 
 #pragma mark -
 #pragma mark Defines
@@ -16,12 +18,14 @@
 #pragma mark -
 #pragma mark Interface
 
-@interface MapViewController () <CLLocationManagerDelegate, MKMapViewDelegate,MKAnnotation,UISearchBarDelegate>
+@interface MapViewController () 
 {
-    CLPlacemark *placemark;
-    double centerx,centery,cirRadius;
-    //CLGeocoder *geoCoder;
-    //MKCircleRenderer *circleRenderer;
+    CLPlacemark *placemark;                 // Pin.
+    double centerx,centery,cirRadius;       // Info about annotation.
+    double userX,userY;
+    MKCoordinateRegion region;              // Stores user location for map view changes.
+    NSMutableArray *overlayArray;                  // Keeps track of overlays for deletion etc.
+    bool annotationIsSelected, moveToUserLocation;
 }
 @end
 
@@ -29,56 +33,39 @@
 @synthesize locationManager;
 @synthesize mapView;
 @synthesize coordinate;
+@synthesize userInRadius;
 
+#pragma mark - UIViewController
 
-
-#pragma mark -
-#pragma mark UIViewController
+- (void)viewWillAppear:(BOOL)animated {
+    
+    // Show navigation bar.
+    self.navigationController.navigationBarHidden = NO;
+    
+    // Show toolbar.
+    self.navigationController.toolbarHidden = NO;
+    
+    // Hide back button.
+    self.navigationItem.hidesBackButton = YES;
+    
+    // Reset.
+    [self resetGestures];
+    [self removeAllPinsButUserLocation];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    // Shoe navigation bar.
-    [self.navigationController setNavigationBarHidden:NO];
-    self.navigationItem.hidesBackButton = YES;
-    
-
-    
-    //Set Up mapView
+    // Set Up mapView.
     self.mapView.delegate = self;
-    
-    //Set up searchBar
-    //self.searchBar.delegate = self;
-    
-    
-    //Add gesture implementation
-    //Once the view is tapped once the gesture is disabled
-    UITapGestureRecognizer *tpgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchMap:)];
-    tpgr.numberOfTapsRequired = 1;
-    [self.mapView addGestureRecognizer:tpgr];
-    
-    /*
-    //only exists to allow the doubletap to execute without placing a pin
-    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(doDoubleTap)];
-    doubleTap.numberOfTapsRequired = 2;
-    [self.view addGestureRecognizer:doubleTap];
-    
-    [tpgr requireGestureRecognizerToFail:doubleTap];
-     */
-    
-    
-    //Once the tap is done sets the pan gesture
-    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRadius:)];
-    [self.mapView addGestureRecognizer:panGesture];
-    
     
     //*****Used for storing location******
     //Set up location manager
     locationManager = [[CLLocationManager alloc] init];
     [[self locationManager] setDelegate:self];
     
-    //ask for permission
+    // Ask for permission.
     if ([[self locationManager] respondsToSelector:@selector(requestWhenInUseAuthorization)])
     {
         [[self locationManager] requestWhenInUseAuthorization];
@@ -89,8 +76,6 @@
     //****Standard Location Service used to check if it all works****
     [[self locationManager] setDesiredAccuracy:kCLLocationAccuracyBest];
     [[self locationManager] startUpdatingLocation];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,11 +84,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark -
-#pragma mark CLLocationManagerDelegate
+#pragma mark - CLLocationManagerDelegate
 
 
-//If an error with reading location is detected
+// If an error with reading location is detected.
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"didFailWithError: %@", error);
@@ -112,20 +96,27 @@
     [errorAlert show];
 }
 
+#pragma mark - MKMapView Delegate Functions
 
-
-#pragma mark -
-#pragma mark MKMapView Delegate Functions
-
-
-//Upon user location update zooms the map to 1 miles out
+// Upon user location update zooms the map to 1 miles out.
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, METERS_MILE, METERS_MILE);
-    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+    region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, METERS_MILE/3, METERS_MILE/3);
+    
+    // Stores user location for use in other areas of program.
+    userX = userLocation.coordinate.longitude;
+    userY = userLocation.coordinate.latitude;
+    
+    // Centers on the user location.
+    if(region.center.longitude == -180.00000000){
+        NSLog(@"Invalid region!");
+    }else if(moveToUserLocation){
+        [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+        moveToUserLocation=NO;
+        MKCircle* userLocationCircle = [MKCircle circleWithCenterCoordinate:userLocation.coordinate radius:100];
+        [self.mapView addOverlay:userLocationCircle];
+    }
 }
-
-
 
 - (MKAnnotationView *)mapView:(MKMapView *)pin_mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
@@ -153,41 +144,38 @@
     return nil;
 }
 
-//will be used later
-- (void)mapView:(MKMapView *)mapView
-didSelectAnnotationView:(MKAnnotationView *)view {
-    printf("control passed to didSelectAnnotationView. \n");
-    
-}
-
-/*-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
- id <MKAnnotation> annotation = [view annotation];
- if ([annotation isKindOfClass:[MKPointAnnotation class]])
- {
- NSLog(@"Clicked");
- }
- UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Disclosure Pressed" message:@"Click Cancel to Go Back" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
- [alertView show];
- }*/
-
-#pragma mark -
-#pragma mark MKOverlayView
+#pragma mark - MKOverlayView
 
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
     
-    
+    // Use ForgetMeNot theme color for radius graphic.
     MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithOverlay:overlay];
     [circleRenderer setFillColor:[UIColor colorWithRed:0.0/255.0f green:153.0/255.0f blue:255.0/255.0f alpha:0.2f]];
     return circleRenderer;
 }
 
+#pragma mark - GestureRecognizer
 
+- (void)resetGestures {
+    
+    // Remove all gestures.
+    for (UIGestureRecognizer *recognizer in self.view.gestureRecognizers) {
+        [self.view removeGestureRecognizer:recognizer];
+    }
+    
+    // Add gesture implementation.
+    // Once the view is tapped once the gesture is disabled.
+    UITapGestureRecognizer *tpgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTouchMap:)];
+    tpgr.numberOfTapsRequired = 1;
+    [self.mapView addGestureRecognizer:tpgr];
+    
+    // Once the tap is done sets the pan gesture.
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRadius:)];
+    [self.mapView addGestureRecognizer:panGesture];
+}
 
-#pragma mark -
-#pragma mark GestureRecognizer
-
-//Only here to ensure that the mapkit doubletaps will be prioritized over the single taps
+// Doubletaps will be prioritized over single taps.
 - (void)doDoubleTap:(UITapGestureRecognizer *)gestureRecognizer
 {}
 
@@ -195,159 +183,167 @@ didSelectAnnotationView:(MKAnnotationView *)view {
 - (void)didTouchMap:(UITapGestureRecognizer *)gestureRecognizer
 {
     
-    //Get touched points for map annotation placement
-    
+    // Get touched points for map annotation placement.
     CGPoint touchPoint = [gestureRecognizer locationInView:self.mapView];
     CLLocationCoordinate2D touchMapCoordinate =
     [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
     
-    //stores coordinates, prints location to console,adds annotation
-    NSLog(@"%.1f,%.1f",touchMapCoordinate.latitude, touchMapCoordinate.longitude);
     
-    //Disables Tap gestureRecognizer
-    
+    // Creates new pin named "New Pin".
     MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
     annot.coordinate = touchMapCoordinate;
     centerx=annot.coordinate.longitude;
     centery=annot.coordinate.latitude;
+    annot.title=@"New Pin";
     [self.mapView addAnnotation:annot];
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(annot.coordinate, 100, 100);
-    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
     
-    //disables the scroll so the pan takes priority
-    //if
+    // Gets distance of touch from user.
+    CLLocation *touchLocation = [[CLLocation alloc] initWithLatitude:touchMapCoordinate.latitude longitude:touchMapCoordinate.longitude];
+    CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userY longitude:userX];
+    CLLocationDistance distanceMeters = [touchLocation distanceFromLocation:userLocation];
+    
+    // If the distance is within the circle sets bool for later use.
+    if (distanceMeters<=100) {
+        userInRadius = YES;
+        printf("Pin is within 100m of user!\n");
+    }
+    else {
+        userInRadius = NO;
+        printf("Pin NOT within 100m of user");
+    }
+    
+    // Zooms on the pin placement location.
+    MKCoordinateRegion pinRegion = MKCoordinateRegionMakeWithDistance(annot.coordinate, 100, 100);
+    [self.mapView setRegion:[self.mapView regionThatFits:pinRegion] animated:YES];
+    
+    // Initializes a placeholder circle around the point with radius 100m.
+    cirRadius=100;
+    MKCircle* circle = [MKCircle circleWithCenterCoordinate:annot.coordinate radius:cirRadius];
+    [self.mapView addOverlay:circle];
+    
+    // Disables the scroll so the pan takes priority.
+    // Disables buttons so as not to disrupt flow.
     self.mapView.scrollEnabled = NO;
     gestureRecognizer.enabled=NO;
-    
+    self.removePinButton.enabled = YES;
+    self.currentLocationButton.enabled = NO;
 }
 
-//Allows gesture recognizers to be used from source code and from mapkit
+// Allows gesture recognizers to be used from source code and from mapkit.
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;
 }
 
-//performs the functions for panning
+// Performs the functions for panning.
 - (void)panRadius:(UIPanGestureRecognizer *)panGesture
 {
     CGPoint radPoint = [panGesture locationInView:self.mapView];
     CLLocationCoordinate2D radMapCoordinate =
     [self.mapView convertPoint:radPoint toCoordinateFromView:self.mapView];
     
-    //place where touch ended
+    // Place where touch ended.
     CLLocation *loc1= [[CLLocation alloc] initWithLatitude:(radMapCoordinate.latitude) longitude:radMapCoordinate.longitude];
     
-    //store pin center location
+    // Store pin center location.
     CLLocationCoordinate2D center;
     center.longitude=centerx;
     center.latitude=centery;
     CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:centery longitude:centerx];
     
-    //Calculate distance between the two
+    // Calculate distance between the two.
     CLLocationDistance dist = [loc1 distanceFromLocation:loc2];
-    cirRadius=dist;
+    if (dist>20)
+        cirRadius=dist;
+    else
+        cirRadius=20;
     MKCircle* circle = [MKCircle circleWithCenterCoordinate:center radius:cirRadius];
-    if (mapView.overlays.count > 0) {
-        //WILL DELETE ALL OVERLAYS ON MAP. Could be alright if I'm only displaying a temp annot
-        [mapView removeOverlays:mapView.overlays];
-    }
+    
+    // Redraw circle
+    NSArray *pointsArray = [[NSArray alloc] initWithObjects:self.mapView.overlays.lastObject, nil];
+    [mapView removeOverlays:pointsArray];
     [self.mapView addOverlay:circle];
-    //NSLog(@"Radius is: %.3f", cirRadius);
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(center, cirRadius*10, cirRadius*10);
-    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+    
+    // Pin region.
+    MKCoordinateRegion pinRegion = MKCoordinateRegionMakeWithDistance(center, cirRadius*10, cirRadius*10);
+    [self.mapView setRegion:[self.mapView regionThatFits:pinRegion] animated:YES];
     
     if(panGesture.state == UIGestureRecognizerStateEnded){
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Pin Details:"
-                                                                       message:[NSString stringWithFormat:@"Center Longitude: %.2f, Center Latitude: %.2f, Center Radius: %.2f", centerx, centery, cirRadius]
-                                                                preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                              handler:^(UIAlertAction * action) {}];
-        
-        [alert addAction:defaultAction];
-        [self presentViewController:alert animated:YES completion:nil];
-        MKCircle* finalCircle = [MKCircle circleWithCenterCoordinate:center radius:cirRadius];
-        [self.mapView addOverlay:finalCircle];
-        self.mapView.scrollEnabled = YES;
+        // Perform appropriate segue based on radius and user location.
+        if (self.userInRadius) {
+            
+            // User is located in radius.
+            [self performSegueWithIdentifier:@"userInRadiusReminder" sender:self];
+        }
+        else {
+            
+            [self performSegueWithIdentifier:@"userOutsideRadiusReminder" sender:self];
+        }
     }
-    
 }
 
-#pragma mark -
-#pragma mark SearchBar Delegate Functions
+#pragma mark - Toolbar Actions
 
-/*- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
+- (IBAction)currentLocationAction:(id)sender {
+    
+    if(region.center.longitude == -180.00000000){
+        NSLog(@"Invalid region!");
+    }else{
+        [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+    }
+}
+
+- (IBAction)removePinAction:(id)sender {
+    
+    // Reset all gestures and remove any current graphics created by user.
+    [self resetGestures];
+    [self removeAllPinsButUserLocation];
+}
+
+- (void)removeAllPinsButUserLocation
+{
+    
+    // Remove pin.
+    [mapView removeAnnotations:[mapView annotations]];
+    
+    // Enable correct buttons.
+    self.currentLocationButton.enabled = YES;
+    self.removePinButton.enabled = NO;
+    
+    // Remove radius graphic.
+    NSArray *pointsArray = [self.mapView overlays];
+    [self.mapView removeOverlays:pointsArray];
+    
+    // Map scroll is reenabled after being disabled by pan gesture.
+    self.mapView.scrollEnabled = YES;
+}
+
+ #pragma mark - Navigation
+
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  
- {
- [self.searchBar setShowsCancelButton:NO animated:YES];
- [self.searchBar resignFirstResponder];
+     // Set current user locarion.
+     CLLocationCoordinate2D center;
+     center.longitude=centerx;
+     center.latitude=centery;
+     
+     NSString *monitoringUUID = [[NSUUID UUID] UUIDString];
+
+     // Set reminder radius and user location for next view controller.
+     if ([segue.identifier isEqualToString:@"userInRadiusReminder"]) {
+         
+         SetUserInRadiusReminderViewController *vc = [[SetUserInRadiusReminderViewController alloc] init];
+         vc.pinUUID = monitoringUUID;
+         vc.radius = cirRadius;
+         vc.center = center;
+     }
+     else if ([segue.identifier isEqualToString:@"userOutsideRadiusReminder"]) {
+         
+         SetUserOutsideRadiusReminderViewController *vc = [[SetUserOutsideRadiusReminderViewController alloc] init];
+         vc.pinUUID = monitoringUUID;
+         vc.radius = cirRadius;
+         vc.center = center;
+     }
  }
- 
- 
- 
- - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
- 
- {
- [self.searchBar setShowsCancelButton:YES animated:YES];
- }
- 
- 
- 
- - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
- 
- {
- [self.searchBar setShowsCancelButton:NO animated:YES];
- }
- 
- -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
- {
- 
- MKLocalSearchRequest *localSearchReq = [[MKLocalSearchRequest alloc] init];
- localSearchReq.naturalLanguageQuery = self.searchBar.text;
- MKLocalSearch *localSearch = [[MKLocalSearch alloc] initWithRequest:localSearchReq];
- [localSearch startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error)
- {
- 
- NSMutableArray *placemarks = [NSMutableArray array];
- 
- for (MKMapItem *item in response.mapItems) {
- 
- [placemarks addObject:item.placemark];
- 
- }
- 
- [self.mapView removeAnnotations:[self.mapView annotations]];
- 
- [self.mapView showAnnotations:placemarks animated:YES];
- 
- }];
- }*/
-
-
-
-
-#pragma mark -
-#pragma mark Segue (commented out)
-
-/*
- 
- //uncomment at completion, once this is being passed to
- 
- 
- //SAMPLE CODE. NEEDS TO BE UPDATED FOR VARIABLE NAMES ETC.
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Make sure your segue name in storyboard is the same as this line
- if ([[segue identifier] isEqualToString:@"YOUR_SEGUE_NAME_HERE"])
- {
- // Get reference to the destination view controller
- YourViewController *vc = [segue destinationViewController];
- 
- // Pass any objects to the view controller here, like...
- [vc setMyObjectHere:object];
- }
- }
- */
-
-
 @end
