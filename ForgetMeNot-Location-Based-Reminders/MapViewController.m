@@ -27,6 +27,13 @@
     NSMutableArray *overlayArray;                  // Keeps track of overlays for deletion etc.
     bool annotationIsSelected, moveToUserLocation;
 }
+
+@property (nonatomic) CLLocationCoordinate2D *centerForReminder;
+@property NSString *monitorUUID;
+@property double radiusForReminder;
+@property double centerXForReminder;
+@property double centerYForReminder;
+
 @end
 
 @implementation MapViewController
@@ -217,7 +224,7 @@
     [self.mapView setRegion:[self.mapView regionThatFits:pinRegion] animated:YES];
     
     // Initializes a placeholder circle around the point with radius 100m.
-    cirRadius=100;
+    cirRadius = 100;
     MKCircle* circle = [MKCircle circleWithCenterCoordinate:annot.coordinate radius:cirRadius];
     [self.mapView addOverlay:circle];
     
@@ -269,6 +276,14 @@
     [self.mapView setRegion:[self.mapView regionThatFits:pinRegion] animated:YES];
     
     if(panGesture.state == UIGestureRecognizerStateEnded){
+        
+        // Info for next view controller.
+        self.centerXForReminder = centerx;
+        self.centerYForReminder = centery;
+        self.radiusForReminder = cirRadius;
+        
+        NSString *monitoringUUID = [[NSUUID UUID] UUIDString];
+        self.monitorUUID = monitoringUUID;
         
         // Perform appropriate segue based on radius and user location.
         if (self.userInRadius) {
@@ -322,27 +337,28 @@
  #pragma mark - Navigation
 
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- 
-     // Set current user locarion.
-     CLLocationCoordinate2D center;
-     center.longitude=centerx;
-     center.latitude=centery;
-     
-     NSString *monitoringUUID = [[NSUUID UUID] UUIDString];
 
+     CLLocationCoordinate2D center;
+     center.longitude = self.centerXForReminder;
+     center.latitude = self.centerYForReminder;
+     
      // Set reminder radius and user location for next view controller.
      if ([segue.identifier isEqualToString:@"userInRadiusReminder"]) {
          
-         SetUserInRadiusReminderViewController *vc = [[SetUserInRadiusReminderViewController alloc] init];
-         vc.pinUUID = monitoringUUID;
-         vc.radius = cirRadius;
+         UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
+         SetUserInRadiusReminderViewController *vc = (SetUserInRadiusReminderViewController *)navController.topViewController;
+         
+         vc.pinUUID = self.monitorUUID;
+         vc.radius = self.radiusForReminder;
          vc.center = center;
      }
-     else if ([segue.identifier isEqualToString:@"userOutsideRadiusReminder"]) {
+     else if ([[segue identifier] isEqualToString:@"userOutsideRadiusReminder"]) {
          
-         SetUserOutsideRadiusReminderViewController *vc = [[SetUserOutsideRadiusReminderViewController alloc] init];
-         vc.pinUUID = monitoringUUID;
-         vc.radius = cirRadius;
+         UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
+         SetUserOutsideRadiusReminderViewController *vc = (SetUserOutsideRadiusReminderViewController*)navController.topViewController;
+         
+         vc.pinUUID = self.monitorUUID;
+         vc.radius = self.radiusForReminder;
          vc.center = center;
      }
  }

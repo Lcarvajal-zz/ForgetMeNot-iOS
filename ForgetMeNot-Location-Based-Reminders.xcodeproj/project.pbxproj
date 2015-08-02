@@ -25,7 +25,6 @@
 		8021D6701B54C1B0002ADF66 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8021D66F1B54C1B0002ADF66 /* QuartzCore.framework */; };
 		8021D6721B54C1BA002ADF66 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8021D6711B54C1BA002ADF66 /* Security.framework */; };
 		8021D6741B54C1C5002ADF66 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8021D6731B54C1C5002ADF66 /* Social.framework */; };
-		8021D6761B54C1CC002ADF66 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8021D6751B54C1CC002ADF66 /* StoreKit.framework */; };
 		8021D6781B54C1D4002ADF66 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8021D6771B54C1D4002ADF66 /* SystemConfiguration.framework */; };
 		8021D67A1B54C1E4002ADF66 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8021D6791B54C1E4002ADF66 /* libz.dylib */; };
 		8021D67C1B54C1F3002ADF66 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8021D67B1B54C1F3002ADF66 /* libsqlite3.dylib */; };
@@ -79,7 +78,6 @@
 		8021D66F1B54C1B0002ADF66 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		8021D6711B54C1BA002ADF66 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8021D6731B54C1C5002ADF66 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		8021D6751B54C1CC002ADF66 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		8021D6771B54C1D4002ADF66 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8021D6791B54C1E4002ADF66 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		8021D67B1B54C1F3002ADF66 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -117,7 +115,6 @@
 				8021D67C1B54C1F3002ADF66 /* libsqlite3.dylib in Frameworks */,
 				8021D67A1B54C1E4002ADF66 /* libz.dylib in Frameworks */,
 				8021D6781B54C1D4002ADF66 /* SystemConfiguration.framework in Frameworks */,
-				8021D6761B54C1CC002ADF66 /* StoreKit.framework in Frameworks */,
 				8084019B1B5F34170072B978 /* CoreLocation.framework in Frameworks */,
 				8021D6741B54C1C5002ADF66 /* Social.framework in Frameworks */,
 				8021D6721B54C1BA002ADF66 /* Security.framework in Frameworks */,
@@ -212,7 +209,6 @@
 				8021D67B1B54C1F3002ADF66 /* libsqlite3.dylib */,
 				8021D6791B54C1E4002ADF66 /* libz.dylib */,
 				8021D6771B54C1D4002ADF66 /* SystemConfiguration.framework */,
-				8021D6751B54C1CC002ADF66 /* StoreKit.framework */,
 				8021D6731B54C1C5002ADF66 /* Social.framework */,
 				8021D6711B54C1BA002ADF66 /* Security.framework */,
 				8021D66F1B54C1B0002ADF66 /* QuartzCore.framework */,
@@ -339,6 +335,12 @@
 				TargetAttributes = {
 					8021D6341B54C049002ADF66 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = B96QXD8K8E;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 					8021D64D1B54C049002ADF66 = {
 						CreatedOnToolsVersion = 6.4;
@@ -481,7 +483,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -518,7 +520,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -531,14 +533,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "ForgetMeNot-Location-Based-Reminders/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -548,14 +552,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "ForgetMeNot-Location-Based-Reminders/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

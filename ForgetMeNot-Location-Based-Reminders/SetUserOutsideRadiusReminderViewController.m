@@ -19,7 +19,6 @@
 @end
 
 @implementation SetUserOutsideRadiusReminderViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -31,6 +30,7 @@
     [self.titleTF becomeFirstResponder];
     
     self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,7 +73,8 @@
     CLCircularRegion *monitoringRegion = [[CLCircularRegion alloc] initWithCenter:self.center radius:self.radius identifier:self.pinUUID];
     
     // Set when notification is triggered.
-    monitoringRegion.notifyOnEntry = YES;
+    monitoringRegion.notifyOnExit = NO;
+    monitoringRegion.notifyOnExit = YES;
     
     [self.locationManager startMonitoringForRegion:monitoringRegion];
 }
@@ -87,18 +88,45 @@
                                      self.pinUUID : @{
                                              @"title" : self.titleTF.text,
                                              @"notes" : self.notesTF.text}
+                                    };
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:tempDictionary];
+        [dictionary addEntriesFromDictionary:[defaults objectForKey:@"PinValues"]];
+        [defaults setObject:dictionary forKey:@"PinValues"];
+        [defaults synchronize];
+        
+        
+        // Start monitoring region on save.
+        [self startMonitoringRegion];
+        
+}
+
+#pragma mark - SetReminderViewControllerDelegate
+- (void)didSavePinInformationForUUID:(NSString *)pinUUID {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)saveAction:(id)sender {
+    
+    // When button clicked save values in details, and title
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // Our dictionary key is the UUID with the title/details being values
+    NSDictionary *tempDictionary = @{
+                                     self.pinUUID : @{
+                                             @"title" : self.titleTF.text,
+                                             @"notes" : self.notesTF.text}
                                      };
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:tempDictionary];
     [dictionary addEntriesFromDictionary:[defaults objectForKey:@"PinValues"]];
     [defaults setObject:dictionary forKey:@"PinValues"];
     [defaults synchronize];
     
-    [self startMonitoringRegion];
-}
-
-- (IBAction)saveAction:(id)sender {
+    NSLog(@"save");
     
-    [self saveReminder];
+    // Start monitoring region on save
+    [self startMonitoringRegion];
+    
+    // Dismiss view
+    [self didSavePinInformationForUUID:self.pinUUID];
 }
 
 - (IBAction)cancelAction:(id)sender {
