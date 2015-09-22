@@ -7,6 +7,7 @@
 //
 
 #import "SetUserOutsideRadiusReminderViewController.h"
+#import <Parse/Parse.h>
 
 @interface SetUserOutsideRadiusReminderViewController ()
 
@@ -59,7 +60,7 @@
         [textField resignFirstResponder];
         
         // Save reminder.
-        [self saveReminder];
+        [self saveAction:nil];
     }
     
     return NO;
@@ -74,30 +75,9 @@
     
     // Set when notification is triggered.
     monitoringRegion.notifyOnExit = NO;
-    monitoringRegion.notifyOnExit = YES;
+    monitoringRegion.notifyOnEntry = YES;
     
     [self.locationManager startMonitoringForRegion:monitoringRegion];
-}
-
-- (void)saveReminder {
-    
-    // Store reminder title and notes.
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    // Dictionary for title and notes.
-    NSDictionary *tempDictionary = @{
-                                     self.pinUUID : @{
-                                             @"title" : self.titleTF.text,
-                                             @"notes" : self.notesTF.text}
-                                    };
-        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:tempDictionary];
-        [dictionary addEntriesFromDictionary:[defaults objectForKey:@"PinValues"]];
-        [defaults setObject:dictionary forKey:@"PinValues"];
-        [defaults synchronize];
-        
-        
-        // Start monitoring region on save.
-        [self startMonitoringRegion];
-        
 }
 
 #pragma mark - SetReminderViewControllerDelegate
@@ -113,20 +93,33 @@
     NSDictionary *tempDictionary = @{
                                      self.pinUUID : @{
                                              @"title" : self.titleTF.text,
-                                             @"notes" : self.notesTF.text}
+                                             @"notes" : self.notesTF.text,
+                                             @"isExpired" : @NO }
                                      };
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:tempDictionary];
     [dictionary addEntriesFromDictionary:[defaults objectForKey:@"PinValues"]];
     [defaults setObject:dictionary forKey:@"PinValues"];
     [defaults synchronize];
     
-    NSLog(@"save");
+    // Store location so that it can be used again in the future.
+    if ([self.destinationName.text length] != 0) {
+        
+        PFObject *location = [PFObject objectWithClassName:@"Location"];
+        [location setObject:[PFUser currentUser] forKey:@"createdBy"];
+        [location setObject:self.destinationName.text forKey:@"name"];
+        [location setObject:[NSNumber numberWithDouble:self.destinationLongitude] forKey:@"longitude"];
+        [location setObject:[NSNumber numberWithDouble:self.destinationLatitude] forKey:@"latitude"];
+        [location saveInBackground];
+    }
     
     // Start monitoring region on save
     [self startMonitoringRegion];
     
     // Dismiss view
     [self didSavePinInformationForUUID:self.pinUUID];
+    
+    // Return to map view.
+    [self dismissViewControllerAnimated:YES completion:^{}];
 }
 
 - (IBAction)cancelAction:(id)sender {

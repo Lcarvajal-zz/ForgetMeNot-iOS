@@ -18,5 +18,7 @@
 @property (strong, nonatomic) NSString *pinUUID;
 @property (nonatomic) CLLocationCoordinate2D center;
 @property (nonatomic) CLLocationDistance radius;
+@property double destinationLongitude;
+@property double destinationLatitude;
 
 @end

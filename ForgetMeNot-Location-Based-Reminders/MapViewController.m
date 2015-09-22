@@ -34,6 +34,8 @@
 @property double centerXForReminder;
 @property double centerYForReminder;
 
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+
 @end
 
 @implementation MapViewController
@@ -55,9 +57,12 @@
     // Hide back button.
     self.navigationItem.hidesBackButton = YES;
     
+    self.navigationItem.titleView = self.searchBar;
+    
     // Reset.
     [self resetGestures];
     [self removeAllPinsButUserLocation];
+    moveToUserLocation=YES;
 }
 
 - (void)viewDidLoad
@@ -120,8 +125,6 @@
     }else if(moveToUserLocation){
         [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
         moveToUserLocation=NO;
-        MKCircle* userLocationCircle = [MKCircle circleWithCenterCoordinate:userLocation.coordinate radius:100];
-        [self.mapView addOverlay:userLocationCircle];
     }
 }
 
@@ -158,6 +161,7 @@
     
     // Use ForgetMeNot theme color for radius graphic.
     MKCircleRenderer *circleRenderer = [[MKCircleRenderer alloc] initWithOverlay:overlay];
+    [circleRenderer setNeedsDisplay];
     [circleRenderer setFillColor:[UIColor colorWithRed:0.0/255.0f green:153.0/255.0f blue:255.0/255.0f alpha:0.2f]];
     return circleRenderer;
 }
@@ -260,20 +264,35 @@
     
     // Calculate distance between the two.
     CLLocationDistance dist = [loc1 distanceFromLocation:loc2];
-    if (dist>20)
-        cirRadius=dist;
-    else
+    if (dist<20) {
         cirRadius=20;
+    }
+    else if (dist>1500) {
+        
+        cirRadius=1500;
+    }
+    else {
+        
+        cirRadius=dist;
+    }
     MKCircle* circle = [MKCircle circleWithCenterCoordinate:center radius:cirRadius];
     
     // Redraw circle
-    NSArray *pointsArray = [[NSArray alloc] initWithObjects:self.mapView.overlays.lastObject, nil];
-    [mapView removeOverlays:pointsArray];
-    [self.mapView addOverlay:circle];
+    // Redraw circle
+    void (^drawCircle) (MKCircle*)= ^(MKCircle *circle){
+        NSArray * removeArray = [[NSArray alloc] initWithArray:[self.mapView overlaysInLevel:1]];
+        //NSArray * removeArray = [[NSArray alloc] initWithObjects:self.mapView.overlays.lastObject, nil];
+        [self.mapView addOverlay:circle level:1];
+        [mapView removeOverlays:removeArray];
+    };
+    drawCircle(circle);
     
     // Pin region.
-    MKCoordinateRegion pinRegion = MKCoordinateRegionMakeWithDistance(center, cirRadius*10, cirRadius*10);
-    [self.mapView setRegion:[self.mapView regionThatFits:pinRegion] animated:YES];
+    MKCoordinateRegion pinRegion;
+    if (((int)cirRadius%10)==0) {
+        pinRegion = MKCoordinateRegionMakeWithDistance(center, cirRadius*2, cirRadius*2);
+        [self.mapView setRegion:[self.mapView regionThatFits:pinRegion] animated:YES];
+    }
     
     if(panGesture.state == UIGestureRecognizerStateEnded){
         
@@ -360,6 +379,8 @@
          vc.pinUUID = self.monitorUUID;
          vc.radius = self.radiusForReminder;
          vc.center = center;
+         vc.destinationLatitude = self.centerXForReminder;
+         vc.destinationLongitude = self.centerYForReminder;
      }
  }
 @end

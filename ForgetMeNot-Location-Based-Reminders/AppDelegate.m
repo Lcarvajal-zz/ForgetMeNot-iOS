@@ -95,7 +95,11 @@
 
 - (void)createNotificationForPinId:(NSString *)pinId whileEntering:(BOOL)entering {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableDictionary *pinDictionary = [defaults objectForKey:@"PinValues"];
+    NSMutableDictionary *pinDictionary = [[defaults objectForKey:@"PinValues"] mutableCopy];
+    
+    if(!entering) {
+        [self cancelLocalNotification:pinId];
+    }
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
@@ -105,8 +109,23 @@
                                    [pinDictionary valueForKeyPath:[NSString stringWithFormat:@"%@.notes", pinId]]
                                    ];
     localNotification.soundName = UILocalNotificationDefaultSoundName;
-    localNotification.applicationIconBadgeNumber = 1;
+    localNotification.applicationIconBadgeNumber += 1;
+    
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+}
+
+- (void)cancelLocalNotification:(NSString*)notificationID
+{
+    for (int j =0;j<[[[UIApplication sharedApplication]scheduledLocalNotifications]count]; j++)
+    {
+        UILocalNotification *someNotification = [[[UIApplication sharedApplication]scheduledLocalNotifications]objectAtIndex:j];
+        if([[someNotification.userInfo objectForKey:@"pinId"] isEqualToString:notificationID])
+        {
+            NSLog(@"canceled notifications %@",someNotification);
+            [[UIApplication sharedApplication] cancelLocalNotification:someNotification];
+        }
+        
+    }
 }
 
 #pragma mark - CLLLocationManagerDelegate

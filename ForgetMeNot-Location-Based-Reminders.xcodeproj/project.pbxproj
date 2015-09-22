@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FDC49851B6E9082008B5FA0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FDC49841B6E9082008B5FA0 /* MapKit.framework */; };
 		8021D63B1B54C049002ADF66 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8021D63A1B54C049002ADF66 /* main.m */; };
 		8021D63E1B54C049002ADF66 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8021D63D1B54C049002ADF66 /* AppDelegate.m */; };
 		8021D6411B54C049002ADF66 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8021D6401B54C049002ADF66 /* LoginViewController.m */; };
@@ -33,8 +34,6 @@
 		8021D69D1B561F1D002ADF66 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8021D69C1B561F1D002ADF66 /* SignUpViewController.m */; };
 		804D7D161B6D2A6600438CDF /* fMNCustomPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 804D7D141B6D2A6600438CDF /* fMNCustomPin.m */; };
 		808401981B5F30310072B978 /* VerifyEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401971B5F30310072B978 /* VerifyEmailViewController.m */; };
-		8084019B1B5F34170072B978 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 808401991B5F34170072B978 /* CoreLocation.framework */; };
-		8084019C1B5F34170072B978 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8084019A1B5F34170072B978 /* MapKit.framework */; };
 		808401A01B5F34C80072B978 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8084019F1B5F34C80072B978 /* MapViewController.m */; };
 		808401A31B5F64BE0072B978 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401A21B5F64BE0072B978 /* ResetPasswordViewController.m */; };
 		808401AA1B5F7C110072B978 /* CurrentRemindersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 808401A91B5F7C110072B978 /* CurrentRemindersTableViewController.m */; };
@@ -54,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FDC49841B6E9082008B5FA0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		8021D6351B54C049002ADF66 /* ForgetMeNot-Location-Based-Reminders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ForgetMeNot-Location-Based-Reminders.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8021D6391B54C049002ADF66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8021D63A1B54C049002ADF66 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -91,8 +91,6 @@
 		804D7D151B6D2A6600438CDF /* fMNCustomPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fMNCustomPin.h; sourceTree = "<group>"; };
 		808401961B5F30310072B978 /* VerifyEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyEmailViewController.h; sourceTree = "<group>"; };
 		808401971B5F30310072B978 /* VerifyEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyEmailViewController.m; sourceTree = "<group>"; };
-		808401991B5F34170072B978 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CoreLocation.framework; sourceTree = "<group>"; };
-		8084019A1B5F34170072B978 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MapKit.framework; sourceTree = "<group>"; };
 		8084019E1B5F34C80072B978 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		8084019F1B5F34C80072B978 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		808401A11B5F64BE0072B978 /* ResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordViewController.h; sourceTree = "<group>"; };
@@ -112,15 +110,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FDC49851B6E9082008B5FA0 /* MapKit.framework in Frameworks */,
 				8021D67C1B54C1F3002ADF66 /* libsqlite3.dylib in Frameworks */,
 				8021D67A1B54C1E4002ADF66 /* libz.dylib in Frameworks */,
 				8021D6781B54C1D4002ADF66 /* SystemConfiguration.framework in Frameworks */,
-				8084019B1B5F34170072B978 /* CoreLocation.framework in Frameworks */,
 				8021D6741B54C1C5002ADF66 /* Social.framework in Frameworks */,
 				8021D6721B54C1BA002ADF66 /* Security.framework in Frameworks */,
 				8021D6701B54C1B0002ADF66 /* QuartzCore.framework in Frameworks */,
 				8021D66E1B54C1A4002ADF66 /* MobileCoreServices.framework in Frameworks */,
-				8084019C1B5F34170072B978 /* MapKit.framework in Frameworks */,
 				8021D66C1B54C19A002ADF66 /* CoreLocation.framework in Frameworks */,
 				8021D66A1B54C190002ADF66 /* CoreGraphics.framework in Frameworks */,
 				8021D6681B54C185002ADF66 /* CFNetwork.framework in Frameworks */,
@@ -204,8 +201,7 @@
 		8021D65E1B54C133002ADF66 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				808401991B5F34170072B978 /* CoreLocation.framework */,
-				8084019A1B5F34170072B978 /* MapKit.framework */,
+				0FDC49841B6E9082008B5FA0 /* MapKit.framework */,
 				8021D67B1B54C1F3002ADF66 /* libsqlite3.dylib */,
 				8021D6791B54C1E4002ADF66 /* libz.dylib */,
 				8021D6771B54C1D4002ADF66 /* SystemConfiguration.framework */,
