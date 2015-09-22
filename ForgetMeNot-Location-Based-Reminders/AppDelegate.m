@@ -22,8 +22,6 @@
     [Parse setApplicationId:@"Ve9m0hJAXAQQHWWRiACW066ZZCzn9BCbO9s1Lf3n"
                   clientKey:@"2VAKzWd5oQlAkl0mtyG2bd6ijxiiVZbUumgSo3uQ"];
     
-    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    
     UIPageControl *pageControl = [UIPageControl appearance];
     pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
     pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed: 0.0/255.0f green:153.0/255.0f blue:255.0/255.0f alpha:1.0];
